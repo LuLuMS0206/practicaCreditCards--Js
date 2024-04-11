@@ -720,7 +720,7 @@ function filterCardsButtons(cards) {
 
     cards.forEach(card => { 
         infoCard = document.createElement("p");
-        infoCard.innerText = `${card.type} ${card.number} ${card.expiration} ${card.owner}`;
+        infoCard.innerText = ` ${card.number} ${card.expiration} ${card.owner}`;
         infoCardId.appendChild(infoCard);
     });
 }
@@ -730,7 +730,7 @@ filterCardsButtons(cards);
 const buttonVisaRetired = document.getElementById('visaRetired');
 buttonVisaRetired.addEventListener('click', () => {
     let filterCards = cards.filter(card => card.type === "Visa Retired");
-    filterCardsButtons(filterCards); // AQUI LLAMAMOS A LA FUNCION PARA GENERAR LA TABLA, Y LE PASAMOS YA LA TABLA FILTRADA
+    filterCardsButtons(filterCards); // llamo a la funcion para generar la lista de personas  
 });
 
 const buttonMasterCard = document.getElementById('masterCard');
@@ -745,14 +745,39 @@ buttonAmericanExpress.addEventListener('click', () => {
     filterCardsButtons(filterCards);
 });
 
-const buttonDiscoverCard = document.getElementById('discoverCard');(document.getElementById('discoverCard')).addEventListener('click', () => {
+const buttonDiscoverCard = document.getElementById('discoverCard');
+buttonDiscoverCard.addEventListener('click', () => {
     let filterCards = cards.filter(card => card.type === "Discover Card");
     filterCardsButtons(filterCards);
 });
 
-const buttonVisa = document.getElementById('visa');(document.getElementById('visa')).addEventListener('click', () => {
+const buttonVisa = document.getElementById('visa');
+buttonVisa.addEventListener('click', () => {
     let filterCards = cards.filter(card => card.type === "Visa");
     filterCardsButtons(filterCards);
 });
+
+
+
+//2
+
+//me creo el input para escribir fecha de caducidad de la tarjeta
+const inputCard = document.createElement("input");
+inputCard.setAttribute("type", "text");
+inputCard.setAttribute("placeholder", "MM/YY");
+partTwo2.appendChild(inputCard)
+
+function filteredCards(filteredCards) {
+    const infoCardId = document.getElementById("infoCardId");
+    infoCardId.innerHTML = "";
+
+    filteredCards.forEach(card => { 
+        const infoCard = document.createElement("p");
+        infoCard.innerText = `${card.type} ${card.expiration} ${card.owner}`;
+        infoCardId.appendChild(infoCard);
+    });
+    console.log(filteredCards)
+}
+
 
 
