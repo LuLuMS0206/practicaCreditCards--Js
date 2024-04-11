@@ -610,88 +610,88 @@ let cards = [
 // let filteredCards = cards.filter(card => card.type === filterCard);
 // console.log(filteredCards);
 
-let cardTypes = [];
+// let cardTypes = [];
 
-cards.forEach((cardSingular) => {
-    if (!cardTypes.includes(cardSingular.type))
-        cardTypes.push(cardSingular.type);
-})
+// cards.forEach((cardSingular) => {
+//     if (!cardTypes.includes(cardSingular.type))
+//         cardTypes.push(cardSingular.type);
+// })
 
-console.log(cardTypes)
+// console.log(cardTypes)
 
-// *******************************************************************
-
-
-// EJERCICIO 2
-// const table = document.getElementById('table');
+// // *******************************************************************
 
 
-// const encabezado = document.createElement("tr");
-// encabezado.innerHTML = "<th>Tipo</th><th>Número</th><th>Vencimiento</th><th>Propietario</th>";
-// table.appendChild(encabezado);
+// // EJERCICIO 2
+// // const table = document.getElementById('table');
 
 
-// cards.forEach((cardInfo) => {
-//     const tableTrInfo = document.createElement("tr");
-//     tableTrInfo.innerHTML = `<td>${cardInfo.type}</td><td>${cardInfo.number}</td><td>${cardInfo.expiration}</td><td>${cardInfo.owner}</td>`;
-//     table.appendChild(tableTrInfo);
-// });
+// // const encabezado = document.createElement("tr");
+// // encabezado.innerHTML = "<th>Tipo</th><th>Número</th><th>Vencimiento</th><th>Propietario</th>";
+// // table.appendChild(encabezado);
 
 
-console.log(Object.keys(cardsGrouped))
-
-const root = document.getElementById("root")
-const table = document.createElement("table")
-const tableHead = document.createElement("thead")
-
-cardTypes.forEach((type) => {
-	console.log(type)
-	const rowHead = document.createElement("th")
-	rowHead.innerText=type
-	tableHead.appendChild(rowHead)
-})
-table.appendChild(tableHead)
+// // cards.forEach((cardInfo) => {
+// //     const tableTrInfo = document.createElement("tr");
+// //     tableTrInfo.innerHTML = `<td>${cardInfo.type}</td><td>${cardInfo.number}</td><td>${cardInfo.expiration}</td><td>${cardInfo.owner}</td>`;
+// //     table.appendChild(tableTrInfo);
+// // });
 
 
-const tBody = document.createElement("tbody")
-table.appendChild(tBody)
+// console.log(Object.keys(cardsGrouped))
 
-const row = document.createElement("tr")
-cardTypes.forEach((type) => {
-	const tableData = document.createElement("td")
-	console.log(type)
-	cardsGrouped[type].forEach((person) =>{
-		console.log(person)
-		const nameParraf = document.createElement("p")
-		nameParraf.innerText = person.owner
-		tableData.append(nameParraf)
-	})
-	row.appendChild(tableData)
+// const root = document.getElementById("root")
+// const table = document.createElement("table")
+// const tableHead = document.createElement("thead")
 
-})
-table.append(row)
-root.appendChild(table)
+// cardTypes.forEach((type) => {
+// 	console.log(type)
+// 	const rowHead = document.createElement("th")
+// 	rowHead.innerText=type
+// 	tableHead.appendChild(rowHead)
+// })
+// table.appendChild(tableHead)
+
+
+// const tBody = document.createElement("tbody")
+// table.appendChild(tBody)
+
+// const row = document.createElement("tr")
+// cardTypes.forEach((type) => {
+// 	const tableData = document.createElement("td")
+// 	console.log(type)
+// 	cardsGrouped[type].forEach((person) =>{
+// 		console.log(person)
+// 		const nameParraf = document.createElement("p")
+// 		nameParraf.innerText = person.owner
+// 		tableData.append(nameParraf)
+// 	})
+// 	row.appendChild(tableData)
+
+// })
+// table.append(row)
+// root.appendChild(table)
 
 
 // *******************************************************************
 
 
 // EJERCICIO 3
-const yearNow = new Date().getFullYear();
+// const yearNow = new Date().getFullYear();
 
-let count = 0;
+// let count = 0;
 
-cards.forEach(card => {
+// cards.forEach(card => {
 
-    const yearExpiration = Number(card.expiration.split('/')[1]); 
+//     const yearExpiration = Number(card.expiration.split('/')[1]); 
 
-    if (yearExpiration === yearNow) {
-        count++; 
-    }
-});
+//     if (yearExpiration === yearNow) {
+//         count++; 
+//     }
+// });
 
-const resultElement = document.getElementById('result');
-resultElement.innerHTML = `La cantidad de personas con fecha de expiración en ${yearNow} es: ${count}`;
+// const resultElement = document.getElementById('result');
+// resultElement.innerHTML = `La cantidad de personas con fecha de expiración en ${yearNow} es: ${count}`;
 
 
 
@@ -704,3 +704,55 @@ resultElement.innerHTML = `La cantidad de personas con fecha de expiración en $
 
 // cardExpiration.includes ("09/24") ? console.log("no hay ninguna tarjeta de crédito caducada") : console.log("hay tarjetas caudcadas")
 // const resultcardExpiration = document.getElementById('resultcardExpiration');
+
+
+
+
+
+//1
+
+
+let infoCard;
+
+function filterCardsButtons(cards) {
+    const infoCardId = document.getElementById("infoCardId");
+    infoCardId.innerHTML = "";
+
+    cards.forEach(card => { 
+        infoCard = document.createElement("p");
+        infoCard.innerText = `${card.type} ${card.number} ${card.expiration} ${card.owner}`;
+        infoCardId.appendChild(infoCard);
+    });
+}
+filterCardsButtons(cards);
+
+//FILTROS BOTONES
+const buttonVisaRetired = document.getElementById('visaRetired');
+buttonVisaRetired.addEventListener('click', () => {
+    let filterCards = cards.filter(card => card.type === "Visa Retired");
+    filterCardsButtons(filterCards); // AQUI LLAMAMOS A LA FUNCION PARA GENERAR LA TABLA, Y LE PASAMOS YA LA TABLA FILTRADA
+});
+
+const buttonMasterCard = document.getElementById('masterCard');
+buttonMasterCard.addEventListener('click', () => {
+    let filterCards = cards.filter(card => card.type === "MasterCard");
+    filterCardsButtons(filterCards);
+});
+
+const buttonAmericanExpress = document.getElementById('americanExpress');
+buttonAmericanExpress.addEventListener('click', () => {
+    let filterCards = cards.filter(card => card.type === "American Express");
+    filterCardsButtons(filterCards);
+});
+
+const buttonDiscoverCard = document.getElementById('discoverCard');(document.getElementById('discoverCard')).addEventListener('click', () => {
+    let filterCards = cards.filter(card => card.type === "Discover Card");
+    filterCardsButtons(filterCards);
+});
+
+const buttonVisa = document.getElementById('visa');(document.getElementById('visa')).addEventListener('click', () => {
+    let filterCards = cards.filter(card => card.type === "Visa");
+    filterCardsButtons(filterCards);
+});
+
+
