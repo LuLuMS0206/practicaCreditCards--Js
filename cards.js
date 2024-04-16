@@ -712,72 +712,78 @@ let cards = [
 //1
 
 
-let infoCard;
+const writeCardListInHtml = (cardList) => {
+	cardsElement.innerHTML = "";
+	cardList.forEach((card) => {
+		const carta = document.createElement("p");
+		carta.innerText = `${card.type} ${card.number} ${card.expiration}`;
+		cardsElement.appendChild(carta);
+	});
+};
 
-function filterCardsButtons(cards) {
-    const infoCardId = document.getElementById("infoCardId");
-    infoCardId.innerHTML = "";
+let cardTypes = [];
+let cardsFiltered = [];
 
-    cards.forEach(card => { 
-        infoCard = document.createElement("p");
-        infoCard.innerText = ` ${card.number} ${card.expiration} ${card.owner}`;
-        infoCardId.appendChild(infoCard);
-    });
-}
-filterCardsButtons(cards);
+const root = document.getElementById("root");
+const cardsElement = document.getElementById("cards");
 
-//FILTROS BOTONES
-const buttonVisaRetired = document.getElementById('visaRetired');
-buttonVisaRetired.addEventListener('click', () => {
-    let filterCards = cards.filter(card => card.type === "Visa Retired");
-    filterCardsButtons(filterCards); // llamo a la funcion para generar la lista de personas  
+cards.forEach((cardSingular) => {
+	if (!cardTypes.includes(cardSingular.type))
+		cardTypes.push(cardSingular.type);
+});
+console.log(cardTypes);
+
+const button = document.createElement("button");
+button.innerText = "Todas";
+button.addEventListener("click", () => {
+	cardsElement.innerHTML = "";
+	cardsFiltered = cards
+	writeCardListInHtml(cards);
+});
+root.appendChild(button);
+
+cardTypes.forEach((type) => {
+	console.log(type);
+	const button = document.createElement("button");
+	button.innerText = type;
+
+	button.addEventListener("click", () => {
+		cardsElement.innerHTML = "";
+		cardsFiltered = cards.filter((card) => card.type === type)
+		writeCardListInHtml(cards.filter((card) => card.type === type));
+	});
+
+	root.appendChild(button);
 });
 
-const buttonMasterCard = document.getElementById('masterCard');
-buttonMasterCard.addEventListener('click', () => {
-    let filterCards = cards.filter(card => card.type === "MasterCard");
-    filterCardsButtons(filterCards);
+writeCardListInHtml(cards);
+
+//2-3
+
+const input = document.createElement("input");
+input.addEventListener("change", (event) => {
+	let userInput = event.target.value;
+	/*
+		EL user input nos da 05 06 07...
+		pero el expiration 05/24 04/25
+		¿Cómo comparo los 2 primero numers con el user input?
+		¿Como cojo del string solo los 2 primeros numeros?
+	*/
+
+	// Con splice
+	/*writeCardListInHtml(
+		cards.filter((card) => card.expiration.slice(0, 2) === userInput)
+	); */
+
+	writeCardListInHtml(
+		cardsFiltered.filter(
+			(card) =>
+				card.expiration.split("/")[0] >= userInput.split("/")[0] &&
+				card.expiration.split("/")[1] >= userInput.split("/")[1]
+		)
+	);
 });
 
-const buttonAmericanExpress = document.getElementById('americanExpress');
-buttonAmericanExpress.addEventListener('click', () => {
-    let filterCards = cards.filter(card => card.type === "American Express");
-    filterCardsButtons(filterCards);
-});
+root.appendChild(input);
 
-const buttonDiscoverCard = document.getElementById('discoverCard');
-buttonDiscoverCard.addEventListener('click', () => {
-    let filterCards = cards.filter(card => card.type === "Discover Card");
-    filterCardsButtons(filterCards);
-});
-
-const buttonVisa = document.getElementById('visa');
-buttonVisa.addEventListener('click', () => {
-    let filterCards = cards.filter(card => card.type === "Visa");
-    filterCardsButtons(filterCards);
-});
-
-
-
-//2
-
-//me creo el input para escribir fecha de caducidad de la tarjeta
-const inputCard = document.createElement("input");
-inputCard.setAttribute("type", "text");
-inputCard.setAttribute("placeholder", "MM/YY");
-partTwo2.appendChild(inputCard)
-
-function filteredCards(filteredCards) {
-    const infoCardId = document.getElementById("infoCardId");
-    infoCardId.innerHTML = "";
-
-    filteredCards.forEach(card => { 
-        const infoCard = document.createElement("p");
-        infoCard.innerText = `${card.type} ${card.expiration} ${card.owner}`;
-        infoCardId.appendChild(infoCard);
-    });
-    console.log(filteredCards)
-}
-
-
-
+console.log();
